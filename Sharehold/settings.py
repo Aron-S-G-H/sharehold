@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -57,7 +58,7 @@ DATABASES = {
         'NAME': 'bahoosh',
         'USER': 'sa',
         'PASSWORD': 'Root1234!',
-        'HOST': 'sqlserver',
+        'HOST': os.getenv('DATABASE_HOST', 'localhost'),
         'PORT': '1433',
         'OPTIONS': {
             'driver': 'ODBC Driver 18 for SQL Server',
@@ -94,12 +95,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
-        "LOCATION": "memcached:11211",
+        "LOCATION": os.getenv('MEMCACHE_LOCATION', 'http://127.0.0.1:11211'),
     }
 }
 
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'http://elasticsearch:9200'
+        'hosts': os.getenv('ELASTICSEARCH_HOST', 'http://127.0.0.1:9200')
     },
 }

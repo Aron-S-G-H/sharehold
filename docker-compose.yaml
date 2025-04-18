@@ -36,6 +36,8 @@ services:
   elasticsearch:
     image: elasticsearch:8.17.5
     container_name: elastic_search
+    volumes:
+      - elastic_data:/usr/share/elasticsearch/data
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
@@ -55,6 +57,10 @@ services:
       - "8000"
     networks:
       - app_network
+    environment:
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
+      - MEMCACHE_LOCATION=memcached:11211
+      - DATABASE_HOST=sqlserver
     depends_on:
       sqlserver:
         condition: service_started
@@ -80,6 +86,7 @@ services:
     restart: unless-stopped
 
 volumes:
+  elastic_data:
   sqlserver_data:
 
 networks:
