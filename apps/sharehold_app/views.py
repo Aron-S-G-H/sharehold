@@ -21,11 +21,9 @@ class ShareholderListView(APIView):
         result = cache.get(cache_key)
 
         if not result:
-            print('no result')
             s = ShareholderDocument.search().query("match", symbol=symbol)
             es_result = s.execute()
             if es_result.hits:
-                print('no hit')
                 result = [
                     {
                         "symbol": hit.symbol,
