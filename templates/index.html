@@ -1,0 +1,28 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جستجوی سهامداران</title>
+</head>
+<body>
+    <h1>جستجوی سهامداران عمده</h1>
+    <form id="search-form">
+        <label for="symbol">نماد بورسی:</label>
+        <input type="text" id="symbol" name="symbol">
+        <button type="submit">جستجو</button>
+    </form>
+    <div id="results"></div>
+
+    <script>
+      document.getElementById('search-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const symbol = document.getElementById('symbol').value;
+        const response = await fetch(`/shareholders/?symbol=${symbol}`);
+        const data = await response.json();
+        document.getElementById('results').innerHTML = JSON.stringify(data);
+      });
+    </script>
+</body>
+</html>
